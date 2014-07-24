@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  get 'demos' => "demos#index", as: 'demos'
+  get 'new' => "demos#new", as: 'new_demo'
+  resources :demos
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -1,0 +1,11 @@
+<h1>Demos#new</h1>
+<p>Find me in app/views/demos/new.html.erb</p>
+
+<%= form_for @demo do |d| %>
+	<fieldset>
+		<%= d.label :stamp_serial, "Stamp Serial" %>
+		<%= d.text_field :stamp_serial %>
+	</fieldset>
+
+	<%= d.submit %>
+<% end %>
