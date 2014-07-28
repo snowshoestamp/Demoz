@@ -1,6 +1,10 @@
+require 'Client'
+# include Client
+
 class DemosController < ApplicationController
   def index
   	@demos = Demo.all
+    # binding.pry
   end
 
   def new
@@ -20,7 +24,11 @@ class DemosController < ApplicationController
   def edit
   end
 
-  def callback
+  def callback(request)
+    @client = Client.new("abcde", 12345)
+    binding.pry
+    data = request.body
+    # data = $_POST[‘data’]
   end
 
   private
