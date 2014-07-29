@@ -24,11 +24,12 @@ class DemosController < ApplicationController
   def edit
   end
 
-  def callback(request)
-    @client = Client.new("abcde", 12345)
-    binding.pry
-    data = request.body
-    # data = $_POST[‘data’]
+  def callback
+    client = Client.new('5bc9c3ddf1f46265e03a', '70a99aa7f4de7f48f235215ce2708b6e4f19377c')
+    @response = client.processData(params["data"])
+    # binding.pry
+    # @data = request.body
+    # puts @response
   end
 
   private
