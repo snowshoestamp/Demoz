@@ -58,6 +58,9 @@ class DemosController < ApplicationController
 
   end
 
+  def errors
+  end
+
   private
 
   def demo_params

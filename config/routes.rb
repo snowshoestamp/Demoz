@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get 'demos' => "demos#index", as: 'demos'
   get 'new' => "demos#new", as: 'new_demo'
   post 'stamp_info' => "demos#callback"
+  get 'errors' => "demos#errors"
   resources :demos
 
 
