@@ -29,20 +29,33 @@ class DemosController < ApplicationController
     # @response = client.processData(params["data"])
 
     @callback_url = "http://10.99.114.161/:3000/stamp_info"
+    @data = {"data" => params["data"]}
 
     @consumer = OAuth::Consumer.new(
       client.app_key, 
       client.app_secret, 
-      :site => "http://beta.snowshoestamp.com/api/v2/stamp"
-      # :authorize_url => 
-    )
+      {:site => "http://beta.snowshoestamp.com/api",
+      :scheme => :header
+      })
+    @resp = @consumer.request(:post, '/v2/stamp', nil, {}, @data, { 'Content-Type' => 'application/x-www-form-urlencoded' })
+
+    @response = JSON.parse(@resp.body)
+    # binding.pry
+    if @response["stamp"]["serial"].include? "B"
+      @display = "B"
+    else 
+      @display = "A"
+    end
+    # binding.pry
     
-    @request_token = @consumer.get_request_token(:oauth_callback => @callback_url)
-    @request_token.params = params
-    # @request_token.secret = client.app_secret
-    session[:request_token] = @request_token
-    binding.pry
-    redirect_to @request_token.authorize_url(:oauth_callback => @callback_url)
+    # @request_token = @consumer.get_request_token(:oauth_callback => @callback_url)
+    # @request_token.params = params
+    # # @request_token.secret = client.app_secret
+    # session[:request_token] = @request_token
+    # binding.pry
+    # redirect_to @request_token.authorize_url(:oauth_callback => @callback_url)
+
+
   end
 
   private
