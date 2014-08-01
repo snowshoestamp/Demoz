@@ -4,7 +4,6 @@ require 'Client'
 class DemosController < ApplicationController
   def index
   	@demos = Demo.all
-    # binding.pry
   end
 
   def new
@@ -26,7 +25,6 @@ class DemosController < ApplicationController
 
   def callback
     client = Client.new('5bc9c3ddf1f46265e03a', '70a99aa7f4de7f48f235215ce2708b6e4f19377c')
-    # @response = client.processData(params["data"])
 
     @callback_url = "http://10.99.114.161/:3000/stamp_info"
     @data = {"data" => params["data"]}
@@ -37,28 +35,21 @@ class DemosController < ApplicationController
       {:site => "http://beta.snowshoestamp.com/api",
       :scheme => :header
       })
+    # Get Auth key with consumer
     @resp = @consumer.request(:post, '/v2/stamp', nil, {}, @data, { 'Content-Type' => 'application/x-www-form-urlencoded' })
 
+    # Parse response and send to template
     @response = JSON.parse(@resp.body)
-    # binding.pry
     if @response["stamp"]["serial"].include? "B"
       @display = "B"
     else 
       @display = "A"
     end
-    # binding.pry
-    
-    # @request_token = @consumer.get_request_token(:oauth_callback => @callback_url)
-    # @request_token.params = params
-    # # @request_token.secret = client.app_secret
-    # session[:request_token] = @request_token
-    # binding.pry
-    # redirect_to @request_token.authorize_url(:oauth_callback => @callback_url)
-
 
   end
 
   def errors
+    #TODO: send error
   end
 
   private
